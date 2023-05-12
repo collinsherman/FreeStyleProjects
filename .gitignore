@@ -1,0 +1,11 @@
+# File types
+*.7z
+*.doc*
+*.txt
+
+# Folders
+__pycache__
+.vscode
+flaviar
+interviews
+school

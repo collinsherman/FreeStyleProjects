@@ -5,12 +5,16 @@ Author: Collin Sherman
 
 import random
 
-NUMSPRINTS = 8
+# Choose desired number of sprints
+NUMSPRINTS = 16
 
 class SprintGenerator():
     """Generates specified number of sprints according to percentiles."""
+
+
     def run(self):
-        reps = NUMSPRINTS
+        """Initializes counters and runs loop, calling methods based on randomly drawn number to return sprint lengths"""
+
         count = 1
         noCount = 0
         shortCount = 0
@@ -18,66 +22,68 @@ class SprintGenerator():
         longCount = 0
         hugeCount = 0
         total = 0
-        print("Sprint Generator will print", reps, "sprints randomly. "\
+
+        print("Sprint Generator will print", NUMSPRINTS, "sprints randomly. "\
               "Get ready to work!\n")
-        while reps != 0:
-            num = random.randint(1, 100)
-            if 1 <= num <= 5:
-                num = self.noGain()
+
+        while NUMSPRINTS >= count:
+            randomNum = random.randint(1, 100)
+            if 1 <= randomNum <= 5:
+                length = self.noGain()
                 noCount += 1
-            elif 6 <= num <= 55:
-                num = self.shortGain()
+            elif 6 <= randomNum <= 55:
+                length = self.shortGain(randomNum)
                 shortCount += 1
-            elif 56 <= num <= 75:
-                num = self.mediumGain()
+            elif 56 <= randomNum <= 85:
+                length = self.mediumGain(randomNum)
                 medCount += 1
-            elif 76 <= num <= 90:
-                num = self.longGain()
+            elif 86 <= randomNum <= 95:
+                length = self.longGain(randomNum)
                 longCount += 1
             else:
-                num = self.hugeGain()
+                length = self.hugeGain(randomNum)
                 hugeCount += 1
-            print(str(count) + ".", str(num))
+
+            print("%d. %d" %(count, length))
             count += 1
-            reps -= 1
-            total += num
-        print("\nNo Gain:", str(noCount), "\nShort Gain:",
-              str(shortCount), "\nMedium Gain:", str(medCount),
-              "\nLong Gain:", str(longCount), "\nHuge Gain:",
-              str(hugeCount), "\n\nTotal Yards:", str(total))
+            total += length
+
+        print("\nNo Gain: %d\nShort Gain: %d\nMedium Gain: %d\nLong Gain: %d\nHuge Gain: %d" %(noCount, shortCount, medCount, longCount, hugeCount))
+
+        return total
             
     def noGain(self):
         """Gain of zero; 5% chance"""
+
         return 0
 
-    def shortGain(self):
+    def shortGain(self, num):
         """Gain of 5, 10, 15, or 20; 50% chance"""
-        num = random.randint(1, 4)
-        if num == 1: return 5
-        if num == 2: return 10
-        if num == 3: return 15
-        if num == 4: return 20
+        
+        if 6 <= num <= 17: return 5
+        elif 18 <= num <= 29: return 10
+        elif 30 <= num <= 42: return 15
+        else: return 20 
 
-    def mediumGain(self):
-        """Gain of 30 or 40; 20% chance"""
-        num = random.randint(1, 2)
-        if num == 1: return 30
-        if num == 2: return 40
+    def mediumGain(self, num):
+        """Gain of 30 or 40; 30% chance"""
 
-    def longGain(self):
-        """Gain of 50 or 60; 15% chance"""
-        num = random.randint(1, 2)
-        if num == 1: return 50
-        if num == 2: return 60
+        if 56 <= num <= 70: return 30
+        else: return 40
 
-    def hugeGain(self):
-        """Gain of 70, 80, 90, or 100; 10% chance"""
-        num = random.randint(1, 4)
-        if num == 1: return 70
-        if num == 2: return 80
-        if num == 3: return 90
-        if num == 4: return 100
+    def longGain(self, num):
+        """Gain of 50 or 60; 10% chance"""
 
+        if 86 <= num <= 90: return 50
+        else: return 60
+
+    def hugeGain(self, num):
+        """Gain of 70, 80, 90, or 100; 5% chance"""
+
+        if num == 96: return 70
+        elif num == 97: return 80
+        elif num == 98: return 90
+        else: return 100
 
 def main():
     generator = SprintGenerator()
@@ -85,10 +91,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-        
+    
